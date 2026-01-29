@@ -1,0 +1,202 @@
+schema_version: 1
+id: %extensionId%
+inputs:
+  - id: tabs
+    tabs:
+      - label: Event
+        fields:
+          - id: event
+            type: dropdown
+            options:
+              - if: "values.platforms?.some((s) => ['twitch', 'kick'].includes(s)) && !values.platforms?.includes('youtube')"
+                label: Follow
+                value: follow
+              - if: "!values.platforms?.some((s) => ['twitch', 'kick'].includes(s)) && values.platforms?.includes('youtube')"
+                label: Subscriber
+                value: follow
+              - if: "values.platforms?.some((s) => ['twitch', 'kick'].includes(s)) && values.platforms?.includes('youtube')"
+                label: Follow/Subscriber
+                value: follow
+              - if: "values.platforms?.some((s) => ['twitch', 'kick'].includes(s)) && !values.platforms?.includes('youtube')"
+                label: Subscribe
+                value: subscribe
+              - if: "!values.platforms?.some((s) => ['twitch', 'kick'].includes(s)) && values.platforms?.includes('youtube')"
+                label: Memberships
+                value: subscribe
+              - if: "values.platforms?.some((s) => ['twitch', 'kick'].includes(s)) && values.platforms?.includes('youtube')"
+                label: Subscribe/Memberships
+                value: subscribe
+              - label: Cheer
+                value: cheer
+              - label: Donation
+                value: donation
+            attributes:
+              label: Event
+              value: follow
+          - id: platforms
+            type: platforms
+            options:
+              - value: twitch
+              - value: youtube
+              - value: kick
+              - value: own3d
+            attributes:
+              label: Platforms
+              value:
+                - twitch
+              multiple: true
+              required: true
+      - label: Content
+        fields:
+          - id: title
+            type: input
+            attributes:
+              type: text
+              label: Title
+              value: 'My Goalbar'
+          - id: goal-target
+            type: input
+            attributes:
+              min: 1
+              step: 1
+              type: number
+              label: 'Goal target'
+              value: 100
+          - id: goal-start
+            type: input
+            attributes:
+              min: 0
+              type: number
+              label: 'Goal start amount'
+              value:
+                value: 0
+                toggled: false
+              optional: true
+      - label: Layout
+        fields:
+          - id: layout
+            type: select
+            options:
+              - image: images/layouts/standard.png
+                label: standard
+                value: standard
+              - image: images/layouts/simple.png
+                label: simple
+                value: simple
+              - image: images/layouts/condensed.png
+                label: condensed
+                value: condensed
+            attributes:
+              type: grid
+              value:
+                - %layout%
+              multiple: false
+      - label: Font
+        fields:
+          - id: title-font
+            type: font-settings
+            attributes:
+              label: Title
+              value:
+                font-size: %titleFontSize%
+                font-color: %titleFontColor%
+                font-style: %titleFontStyle%
+                text-align: %titleTextAlign%
+                font-family: %titleFontFamily%
+                font-weight: %titleFontWeight%
+                line-height: 1.2
+                text-indent: 0
+                letter-spacing: 0
+          - id: target-font
+            type: font-settings
+            attributes:
+              label: Goal
+              value:
+                font-size: %goalFontSize%
+                font-color: %goalFontColor%
+                font-style: %goalFontStyle%
+                text-align: %goalTextAlign%
+                font-family: %goalFontFamily%
+                font-weight: %goalFontWeight%
+                line-height: 1.2
+                text-indent: 0
+                letter-spacing: 0
+          - id: dates-font
+            type: font-settings
+            attributes:
+              label: Date
+              value:
+                font-size: %datesFontSize%
+                font-color: %datesFontColor%
+                font-style: %datesFontStyle%
+                text-align: %datesTextAlign%
+                font-family: %datesFontFamily%
+                font-weight: %datesFontWeight%
+                line-height: 1.2
+                text-indent: 0
+                letter-spacing: 0
+      - label: Colors
+        fields:
+          - id: fill-color
+            type: color
+            attributes:
+              label: Fill
+              value: %fillColor%
+              allow-gradient: true
+          - id: bg-color
+            type: color
+            attributes:
+              label: Background
+              value: %bgColor%
+              allow-gradient: true
+      - label: Dates
+        fields:
+          - id: goal-start-date
+            type: input
+            excluded_from_template: true
+            attributes:
+              type: datetime-local
+              label: 'Goal start date'
+              value:
+                value: ''
+                toggled: false
+              optional: true
+          - id: goal-end-date
+            type: input
+            excluded_from_template: true
+            attributes:
+              type: datetime-local
+              label: 'Goal end date'
+              value:
+                value: ''
+                toggled: false
+              optional: true
+          - id: dates-end-toggles
+            type: group
+            fields:
+              - id: dates-end-show
+                type: boolean
+                attributes:
+                  label: 'Show End Date'
+                  value: true
+              - id: dates-end-time-show
+                type: boolean
+                attributes:
+                  label: 'Show End Time'
+                  value: true
+            attributes: []
+          - id: dates-format-date
+            type: input
+            attributes:
+              type: text
+              label: 'Date Format'
+              value: MM/DD/YYYY
+              placeholder: MM/DD/YYYY
+          - id: dates-format-time
+            type: input
+            attributes:
+              type: text
+              label: 'Time Format'
+              value: 'HH:mm'
+              placeholder: 'HH:mm'
+    type: tabs

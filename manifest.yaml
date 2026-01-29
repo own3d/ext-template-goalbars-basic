@@ -1,0 +1,16 @@
+schema_version: 2
+id: %extensionId%
+name: %extensionName%
+version: %extensionVersion%
+description: %extensionDescription%
+summary: %extensionDescription%
+store_presence:
+  images:
+    logo: assets/own3d.svg
+compatibilities:
+  browser-source:
+    path: index.html
+    resize_by_default: true
+    sizing:
+      width: 800
+      height: 200
