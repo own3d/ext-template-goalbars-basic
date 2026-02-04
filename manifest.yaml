@@ -12,5 +12,5 @@ compatibilities:
     path: index.html
     resize_by_default: true
     sizing:
-      width: 800
-      height: 200
+      width: %width%
+      height: %height%

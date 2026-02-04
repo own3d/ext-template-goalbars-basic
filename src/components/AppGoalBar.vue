@@ -2,8 +2,7 @@
   <div>
     <div
       v-if="layout === 'standard'"
-      class="px-[2.7vw]"
-      :style="titleStyle"
+      :style="{ ...titleStyle, paddingLeft: `${barInsetLeft}px`, paddingRight: `${barInsetRight}px` }"
     >
       {{ values.title }}
     </div>
@@ -31,16 +30,24 @@
         alt=""
       >
 
+      <!-- Background color layer -->
       <div
-        class="absolute top-[3.5vw] left-[3.5vw] h-[8.5vw] w-[calc(100%_-_7vw)] z-10"
-        :style="{
-          background: values['bg-color'] ?? 'transparent'
-        }"
-      />
-
-      <div class="absolute top-[3.5vw] left-[3.5vw] h-[8.5vw] w-[calc(100%_-_7vw)] z-10">
+        class="absolute z-10"
+        :style="fillAreaStyle"
+      >
         <div
-          class="left-0 top-0 h-full"
+          class="w-full h-full"
+          :style="{ background: values['bg-color'] ?? 'transparent' }"
+        />
+      </div>
+
+      <!-- Fill progress layer -->
+      <div
+        class="absolute z-10"
+        :style="fillAreaStyle"
+      >
+        <div
+          class="h-full"
           :style="{
             background: values['fill-color'] ?? 'transparent',
             width: `${Math.min(percentage, 100)}%`,
@@ -49,9 +56,11 @@
         />
       </div>
 
+      <!-- Simple layout content -->
       <div
         v-if="layout === 'simple'"
-        class="absolute flex items-center justify-center gap-2 top-[3.7vw] left-0 h-[7.9vw] w-full px-[7vw] z-50"
+        class="absolute flex items-center justify-center gap-2 z-50"
+        :style="textOverlayStyle"
       >
         <div :style="titleStyle">
           {{ values.title }}:
@@ -62,10 +71,11 @@
         </div>
       </div>
 
+      <!-- Standard layout content -->
       <div
         v-if="layout === 'standard'"
-        class="absolute top-[3.7vw] left-0 w-full h-[7.9vw] z-50 flex items-center justify-between px-[7vw]"
-        :style="goalStyle"
+        class="absolute z-50 flex items-center justify-between"
+        :style="{ ...goalStyle, ...textOverlayStyle }"
       >
         <div>
           {{ event === 'donation' ? (currentGoalValue * 100).toFixed(0) : currentGoalValue }}
@@ -76,10 +86,11 @@
         </div>
       </div>
 
-
+      <!-- Condensed layout content -->
       <div
         v-if="layout === 'condensed'"
-        class="absolute flex items-center justify-between gap-2 top-[3.7vw] left-0 h-[7.9vw] w-full z-50 px-[7vw]"
+        class="absolute flex items-center justify-between gap-2 z-50"
+        :style="textOverlayStyle"
       >
         <div :style="goalStyle">
           {{ currentGoalValue }}
@@ -97,8 +108,8 @@
 
     <div
       v-if="layout === 'standard' && values['goal-end-date']?.toggled && (values['dates-end-show'] || values['dates-end-time-show'])"
-      class="w-full px-[2.7vw]"
-      :style="datesStyle"
+      class="w-full"
+      :style="{ ...datesStyle, paddingLeft: `${barInsetLeft}px`, paddingRight: `${barInsetRight}px` }"
     >
       <span
         v-if="values['dates-end-show']"
@@ -177,6 +188,34 @@ const datesStyle = computed(() => {
   }
 
   return getTextStyle(props.values?.['dates-font'])
+})
+
+// Bar insets (pixel-based positioning relative to the image)
+const barInsetTop = computed(() => props.values?.['bar-inset-top'] ?? 38)
+const barInsetRight = computed(() => props.values?.['bar-inset-right'] ?? 28)
+const barInsetBottom = computed(() => props.values?.['bar-inset-bottom'] ?? 42)
+const barInsetLeft = computed(() => props.values?.['bar-inset-left'] ?? 28)
+
+// Computed style for fill area (background and progress bar)
+const fillAreaStyle = computed(() => {
+  return {
+    top: `${barInsetTop.value}px`,
+    left: `${barInsetLeft.value}px`,
+    right: `${barInsetRight.value}px`,
+    bottom: `${barInsetBottom.value}px`,
+  }
+})
+
+// Computed style for text overlay (slightly adjusted for text centering)
+const textOverlayStyle = computed(() => {
+  return {
+    top: `${barInsetTop.value}px`,
+    left: `${barInsetLeft.value}px`,
+    right: `${barInsetRight.value}px`,
+    bottom: `${barInsetBottom.value}px`,
+    paddingLeft: '8px',
+    paddingRight: '8px',
+  }
 })
 
 function getTextStyle(settings: any) {

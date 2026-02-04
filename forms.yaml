@@ -53,7 +53,7 @@ inputs:
             attributes:
               type: text
               label: Title
-              value: 'My Goalbar'
+              value: '%defaultTitle%'
           - id: goal-target
             type: input
             attributes:
@@ -61,7 +61,7 @@ inputs:
               step: 1
               type: number
               label: 'Goal target'
-              value: 100
+              value: %defaultGoalTarget%
           - id: goal-start
             type: input
             attributes:
@@ -199,4 +199,38 @@ inputs:
               label: 'Time Format'
               value: 'HH:mm'
               placeholder: 'HH:mm'
+      - label: Bar Position
+        fields:
+          - id: bar-inset-top
+            type: input
+            attributes:
+              type: number
+              label: 'Inset Top (px)'
+              value: %barInsetTop%
+              min: 0
+              step: 1
+          - id: bar-inset-right
+            type: input
+            attributes:
+              type: number
+              label: 'Inset Right (px)'
+              value: %barInsetRight%
+              min: 0
+              step: 1
+          - id: bar-inset-bottom
+            type: input
+            attributes:
+              type: number
+              label: 'Inset Bottom (px)'
+              value: %barInsetBottom%
+              min: 0
+              step: 1
+          - id: bar-inset-left
+            type: input
+            attributes:
+              type: number
+              label: 'Inset Left (px)'
+              value: %barInsetLeft%
+              min: 0
+              step: 1
     type: tabs
