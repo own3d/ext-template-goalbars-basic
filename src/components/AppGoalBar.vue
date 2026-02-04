@@ -2,7 +2,7 @@
   <div>
     <div
       v-if="layout === 'standard'"
-      :style="{ ...titleStyle, paddingLeft: `${barInsetLeft}px`, paddingRight: `${barInsetRight}px` }"
+      :style="{ ...titleStyle, paddingLeft: `${barInsetLeft}%`, paddingRight: `${barInsetRight}%` }"
     >
       {{ values.title }}
     </div>
@@ -20,12 +20,12 @@
         loop
         autoplay
         playsinline
-        class="relative z-50 w-full"
+        class="relative z-50 w-full h-auto"
         style="display: block;"
       />
       <img
         v-else
-        class="relative z-50 w-full"
+        class="relative z-50 w-full h-auto"
         style="display: block;"
         :src="imageUrl"
         alt=""
@@ -76,7 +76,7 @@
       <div
         v-if="layout === 'standard'"
         class="absolute z-50 flex items-center justify-between"
-        :style="{ ...goalStyle, ...textOverlayStyle }"
+        :style="[goalStyle, textOverlayStyle]"
       >
         <div>
           {{ event === 'donation' ? (currentGoalValue * 100).toFixed(0) : currentGoalValue }}
@@ -110,7 +110,7 @@
     <div
       v-if="layout === 'standard' && values['goal-end-date']?.toggled && (values['dates-end-show'] || values['dates-end-time-show'])"
       class="w-full"
-      :style="{ ...datesStyle, paddingLeft: `${barInsetLeft}px`, paddingRight: `${barInsetRight}px` }"
+      :style="{ ...datesStyle, paddingLeft: `${barInsetLeft}%`, paddingRight: `${barInsetRight}%` }"
     >
       <span
         v-if="values['dates-end-show']"
@@ -191,32 +191,32 @@ const datesStyle = computed(() => {
   return getTextStyle(props.values?.['dates-font'])
 })
 
-// Bar insets (pixel-based positioning relative to the image)
-const barInsetTop = computed(() => props.values?.['bar-inset-top'] ?? 38)
-const barInsetRight = computed(() => props.values?.['bar-inset-right'] ?? 28)
-const barInsetBottom = computed(() => props.values?.['bar-inset-bottom'] ?? 42)
-const barInsetLeft = computed(() => props.values?.['bar-inset-left'] ?? 28)
+// Bar insets (percentage-based positioning relative to the image)
+// Percentages are calculated from pixel values and expected dimensions
+const barInsetTopPx = computed(() => props.values?.['bar-inset-top'] ?? 38)
+const barInsetRightPx = computed(() => props.values?.['bar-inset-right'] ?? 28)
+const barInsetBottomPx = computed(() => props.values?.['bar-inset-bottom'] ?? 42)
+const barInsetLeftPx = computed(() => props.values?.['bar-inset-left'] ?? 28)
+
+// Expected dimensions for percentage calculation (from manifest sizing)
+const expectedWidth = computed(() => props.values?.['bar-width'] ?? 800)
+const expectedHeight = computed(() => props.values?.['bar-height'] ?? 200)
+
+// Convert pixel insets to percentages
+const barInsetTop = computed(() => (barInsetTopPx.value / expectedHeight.value) * 100)
+const barInsetRight = computed(() => (barInsetRightPx.value / expectedWidth.value) * 100)
+const barInsetBottom = computed(() => (barInsetBottomPx.value / expectedHeight.value) * 100)
+const barInsetLeft = computed(() => (barInsetLeftPx.value / expectedWidth.value) * 100)
 
 // Computed style for fill area (background and progress bar)
+// Using percentages so the fill bar scales with the image
 const fillAreaStyle = computed(() => {
-  return {
-    top: `${barInsetTop.value}px`,
-    left: `${barInsetLeft.value}px`,
-    right: `${barInsetRight.value}px`,
-    bottom: `${barInsetBottom.value}px`,
-  }
+  return `top: ${barInsetTop.value}%; right: ${barInsetRight.value}%; bottom: ${barInsetBottom.value}%; left: ${barInsetLeft.value}%;`
 })
 
-// Computed style for text overlay (slightly adjusted for text centering)
+// Computed style for text overlay
 const textOverlayStyle = computed(() => {
-  return {
-    top: `${barInsetTop.value}px`,
-    left: `${barInsetLeft.value}px`,
-    right: `${barInsetRight.value}px`,
-    bottom: `${barInsetBottom.value}px`,
-    paddingLeft: '8px',
-    paddingRight: '8px',
-  }
+  return `top: ${barInsetTop.value}%; right: ${barInsetRight.value}%; bottom: ${barInsetBottom.value}%; left: ${barInsetLeft.value}%; padding-left: 1%; padding-right: 1%;`
 })
 
 function getTextStyle(settings: any) {
