@@ -20,12 +20,13 @@
         loop
         autoplay
         playsinline
-        class="relative z-50"
+        class="relative z-50 w-full"
+        style="display: block;"
       />
       <img
         v-else
-        class="relative z-50"
-        style="width: 100%;"
+        class="relative z-50 w-full"
+        style="display: block;"
         :src="imageUrl"
         alt=""
       >
