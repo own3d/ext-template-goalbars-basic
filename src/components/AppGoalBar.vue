@@ -44,15 +44,17 @@
 
       <!-- Fill progress layer -->
       <div
-        class="absolute z-10"
+        class="absolute z-10 flex"
+        :class="barDirection === 'vertical' ? 'flex-col' : 'flex-row'"
         :style="fillAreaStyle"
       >
         <div
-          class="h-full"
           :style="{
             background: values['fill-color'] ?? 'transparent',
-            width: `${Math.min(percentage, 100)}%`,
-            transition: 'width 0.25s'
+            ...(barDirection === 'vertical'
+              ? { width: '100%', height: `${Math.min(percentage, 100)}%`, marginTop: 'auto' }
+              : { height: '100%', width: `${Math.min(percentage, 100)}%` }),
+            transition: barDirection === 'vertical' ? 'height 0.25s' : 'width 0.25s'
           }"
         />
       </div>
@@ -63,11 +65,11 @@
         class="absolute flex items-center justify-center gap-2 z-50"
         :style="textOverlayStyle"
       >
-        <div :style="titleStyle">
+        <div :style="[titleStyle, titleMarginStyle]">
           {{ values.title }}:
         </div>
 
-        <div :style="goalStyle">
+        <div :style="[goalStyle, goalMarginStyle]">
           {{ currentGoalValue.toFixed(event === 'donation' ? 2 : 0) }} / {{ values['goal-target'].toFixed(event === 'donation' ? 2 : 0) }} ({{ percentage.toFixed(0) }}%)
         </div>
       </div>
@@ -78,11 +80,11 @@
         class="absolute z-50 flex items-center justify-between"
         :style="[goalStyle, textOverlayStyle]"
       >
-        <div>
+        <div :style="progressMarginStyle">
           {{ event === 'donation' ? (currentGoalValue * 100).toFixed(0) : currentGoalValue }}
         </div>
-  
-        <div>
+
+        <div :style="targetMarginStyle">
           {{ values['goal-target'] }}
         </div>
       </div>
@@ -93,16 +95,31 @@
         class="absolute flex items-center justify-between gap-2 z-50"
         :style="textOverlayStyle"
       >
-        <div :style="goalStyle">
+        <div :style="[goalStyle, progressMarginStyle]">
           {{ currentGoalValue }}
         </div>
 
-        <div :style="titleStyle">
+        <div :style="[titleStyle, titleMarginStyle]">
           {{ values.title }}:
         </div>
 
-        <div :style="goalStyle">
+        <div :style="[goalStyle, targetMarginStyle]">
            {{ values['goal-target'] }}
+        </div>
+      </div>
+
+      <!-- Stacked layout content -->
+      <div
+        v-if="layout === 'stacked'"
+        class="absolute flex flex-col items-center justify-center z-50"
+        :style="textOverlayStyle"
+      >
+        <div :style="[titleStyle, titleMarginStyle]">
+          {{ values.title }}
+        </div>
+
+        <div :style="[goalStyle, goalMarginStyle]">
+          {{ currentGoalValue.toFixed(event === 'donation' ? 2 : 0) }} / {{ values['goal-target'].toFixed(event === 'donation' ? 2 : 0) }} ({{ percentage.toFixed(0) }}%)
         </div>
       </div>
     </div>
@@ -232,4 +249,11 @@ function getTextStyle(settings: any) {
     letterSpacing: settings['letter-spacing'] ? `${settings['letter-spacing']}px` : '1',
   }
 }
+
+// Staff-only settings baked in during generation (not user-configurable)
+const barDirection = '%barDirection%' as 'horizontal' | 'vertical'
+const titleMarginStyle = { margin: '%titleMarginTop%px %titleMarginRight%px %titleMarginBottom%px %titleMarginLeft%px' }
+const goalMarginStyle = { margin: '%goalMarginTop%px %goalMarginRight%px %goalMarginBottom%px %goalMarginLeft%px' }
+const progressMarginStyle = { margin: '%progressMarginTop%px %progressMarginRight%px %progressMarginBottom%px %progressMarginLeft%px' }
+const targetMarginStyle = { margin: '%targetMarginTop%px %targetMarginRight%px %targetMarginBottom%px %targetMarginLeft%px' }
 </script>

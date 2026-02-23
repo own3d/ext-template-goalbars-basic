@@ -86,6 +86,9 @@ inputs:
               - image: images/layouts/condensed.png
                 label: condensed
                 value: condensed
+              - image: images/layouts/stacked.png
+                label: stacked
+                value: stacked
             attributes:
               type: grid
               value:
