@@ -192,46 +192,28 @@ inputs:
               label: 'Time Format'
               value: 'HH:mm'
               placeholder: 'HH:mm'
-      - label: Bar Position
-        fields:
-          - id: bar-width
-            type: hidden
-            attributes:
-              value: %width%
-          - id: bar-height
-            type: hidden
-            attributes:
-              value: %height%
-          - id: bar-inset-top
-            type: input
-            attributes:
-              type: number
-              label: 'Inset Top (px)'
-              value: %barInsetTop%
-              min: 0
-              step: 1
-          - id: bar-inset-right
-            type: input
-            attributes:
-              type: number
-              label: 'Inset Right (px)'
-              value: %barInsetRight%
-              min: 0
-              step: 1
-          - id: bar-inset-bottom
-            type: input
-            attributes:
-              type: number
-              label: 'Inset Bottom (px)'
-              value: %barInsetBottom%
-              min: 0
-              step: 1
-          - id: bar-inset-left
-            type: input
-            attributes:
-              type: number
-              label: 'Inset Left (px)'
-              value: %barInsetLeft%
-              min: 0
-              step: 1
     type: tabs
+  - id: bar-width
+    type: hidden
+    attributes:
+      value: %width%
+  - id: bar-height
+    type: hidden
+    attributes:
+      value: %height%
+  - id: bar-inset-top
+    type: hidden
+    attributes:
+      value: %barInsetTop%
+  - id: bar-inset-right
+    type: hidden
+    attributes:
+      value: %barInsetRight%
+  - id: bar-inset-bottom
+    type: hidden
+    attributes:
+      value: %barInsetBottom%
+  - id: bar-inset-left
+    type: hidden
+    attributes:
+      value: %barInsetLeft%
