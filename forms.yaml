@@ -1,6 +1,11 @@
 schema_version: 1
 id: %extensionId%
 inputs:
+  - id: layout
+    type: hidden
+    attributes:
+      value:
+        - %layout%
   - id: tabs
     tabs:
       - label: Event
@@ -72,28 +77,13 @@ inputs:
                 value: 0
                 toggled: false
               optional: true
-      - label: Layout
+      - label: Appearance
         fields:
-          - id: layout
-            type: select
-            options:
-              - image: images/layouts/standard.png
-                label: standard
-                value: standard
-              - image: images/layouts/simple.png
-                label: simple
-                value: simple
-              - image: images/layouts/condensed.png
-                label: condensed
-                value: condensed
-              - image: images/layouts/stacked.png
-                label: stacked
-                value: stacked
+          - id: animated
+            type: %animatedFieldType%
             attributes:
-              type: grid
-              value:
-                - %layout%
-              multiple: false
+              label: 'Animated Version'
+              value: %animatedDefault%
       - label: Font
         fields:
           - id: title-font

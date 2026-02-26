@@ -14,7 +14,7 @@
       }"
     >
       <video
-        v-if="values.animated"
+        v-if="hasVideo && (values.animated || !hasImage)"
         :src="videoUrl"
         muted
         loop
@@ -24,7 +24,7 @@
         style="display: block;"
       />
       <img
-        v-else
+        v-else-if="hasImage"
         class="relative z-50 w-full h-auto"
         style="display: block;"
         :src="imageUrl"
@@ -251,6 +251,8 @@ function getTextStyle(settings: any) {
 }
 
 // Staff-only settings baked in during generation (not user-configurable)
+const hasImage = %hasImage%
+const hasVideo = %hasVideo%
 const barDirection = '%barDirection%' as 'horizontal' | 'vertical'
 const titleMarginStyle = { margin: '%titleMarginTop%px %titleMarginRight%px %titleMarginBottom%px %titleMarginLeft%px' }
 const goalMarginStyle = { margin: '%goalMarginTop%px %goalMarginRight%px %goalMarginBottom%px %goalMarginLeft%px' }
