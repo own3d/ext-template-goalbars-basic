@@ -52,9 +52,9 @@
           :style="{
             background: values['fill-color'] ?? 'transparent',
             ...(barDirection === 'vertical'
-              ? { width: '100%', height: `${Math.min(percentage, 100)}%`, marginTop: 'auto' }
-              : { height: '100%', width: `${Math.min(percentage, 100)}%` }),
-            transition: barDirection === 'vertical' ? 'height 0.25s' : 'width 0.25s'
+              ? { width: '100%', height: `${Math.min(displayPercentage, 100)}%`, marginTop: 'auto' }
+              : { height: '100%', width: `${Math.min(displayPercentage, 100)}%` }),
+            transition: fillTransitionStyle
           }"
         />
       </div>
@@ -146,7 +146,7 @@
 
 <script setup lang="ts">
 import type { ComputedRef } from 'vue'
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import dayjs from 'dayjs'
 
 const props = defineProps({
@@ -166,6 +166,29 @@ const event = computed(() => {
 
 const percentage: ComputedRef<number> = computed(() => {
   return (props.currentGoalValue / props.values['goal-target']) * 100
+})
+
+const displayPercentage = ref(percentage.value)
+const fillAnimating = ref(false)
+
+watch(percentage, (val) => {
+  if (fillEffect === 'fill') {
+    fillAnimating.value = true
+    displayPercentage.value = 100
+    setTimeout(() => {
+      fillAnimating.value = false
+      displayPercentage.value = val
+    }, 350)
+  } else {
+    displayPercentage.value = val
+  }
+})
+
+const fillTransitionStyle = computed(() => {
+  if (fillEffect === 'bouncy') return 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'
+  if (fillEffect === 'fill' && fillAnimating.value) return 'all 0.3s ease'
+  if (fillEffect === 'fill') return 'all 0.5s ease-out'
+  return 'all 0.3s ease'
 })
 
 const layout = computed(() => {
@@ -253,6 +276,7 @@ function getTextStyle(settings: any) {
 // Staff-only settings baked in during generation (not user-configurable)
 const hasImage = %hasImage%
 const hasVideo = %hasVideo%
+const fillEffect = '%fillEffect%' as 'default' | 'bouncy' | 'fill'
 const barDirection = '%barDirection%' as 'horizontal' | 'vertical'
 const titleMarginStyle = { margin: '%titleMarginTop%px %titleMarginRight%px %titleMarginBottom%px %titleMarginLeft%px' }
 const goalMarginStyle = { margin: '%goalMarginTop%px %goalMarginRight%px %goalMarginBottom%px %goalMarginLeft%px' }
