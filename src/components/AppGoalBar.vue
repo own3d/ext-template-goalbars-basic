@@ -65,11 +65,11 @@
         class="absolute flex items-center justify-center gap-2 z-50"
         :style="textOverlayStyle"
       >
-        <div :style="[titleStyle, titleMarginStyle]">
+        <div :style="[titleStyle, titleOffsetStyle]">
           {{ values.title }}:
         </div>
 
-        <div :style="[goalStyle, goalMarginStyle]">
+        <div :style="[goalStyle, goalOffsetStyle]">
           {{ currentGoalValue.toFixed(event === 'donation' ? 2 : 0) }} / {{ values['goal-target'].toFixed(event === 'donation' ? 2 : 0) }} ({{ percentage.toFixed(0) }}%)
         </div>
       </div>
@@ -80,11 +80,11 @@
         class="absolute z-50 flex items-center justify-between"
         :style="[goalStyle, textOverlayStyle]"
       >
-        <div :style="progressMarginStyle">
+        <div :style="progressOffsetStyle">
           {{ event === 'donation' ? (currentGoalValue * 100).toFixed(0) : currentGoalValue }}
         </div>
 
-        <div :style="targetMarginStyle">
+        <div :style="targetOffsetStyle">
           {{ values['goal-target'] }}
         </div>
       </div>
@@ -95,15 +95,15 @@
         class="absolute flex items-center justify-between gap-2 z-50"
         :style="textOverlayStyle"
       >
-        <div :style="[goalStyle, progressMarginStyle]">
+        <div :style="[goalStyle, progressOffsetStyle]">
           {{ currentGoalValue }}
         </div>
 
-        <div :style="[titleStyle, titleMarginStyle]">
+        <div :style="[titleStyle, titleOffsetStyle]">
           {{ values.title }}:
         </div>
 
-        <div :style="[goalStyle, targetMarginStyle]">
+        <div :style="[goalStyle, targetOffsetStyle]">
            {{ values['goal-target'] }}
         </div>
       </div>
@@ -114,11 +114,11 @@
         class="absolute flex flex-col items-center justify-center z-50"
         :style="textOverlayStyle"
       >
-        <div :style="[titleStyle, titleMarginStyle]">
+        <div :style="[titleStyle, titleOffsetStyle]">
           {{ values.title }}
         </div>
 
-        <div :style="[goalStyle, goalMarginStyle]">
+        <div :style="[goalStyle, goalOffsetStyle]">
           {{ currentGoalValue.toFixed(event === 'donation' ? 2 : 0) }} / {{ values['goal-target'].toFixed(event === 'donation' ? 2 : 0) }} ({{ percentage.toFixed(0) }}%)
         </div>
       </div>
@@ -278,8 +278,8 @@ const hasImage = %hasImage%
 const hasVideo = %hasVideo%
 const fillEffect = '%fillEffect%' as 'default' | 'bouncy' | 'fill'
 const barDirection = '%barDirection%' as 'horizontal' | 'vertical'
-const titleMarginStyle = { margin: '%titleMarginTop%px %titleMarginRight%px %titleMarginBottom%px %titleMarginLeft%px' }
-const goalMarginStyle = { margin: '%goalMarginTop%px %goalMarginRight%px %goalMarginBottom%px %goalMarginLeft%px' }
-const progressMarginStyle = { margin: '%progressMarginTop%px %progressMarginRight%px %progressMarginBottom%px %progressMarginLeft%px' }
-const targetMarginStyle = { margin: '%targetMarginTop%px %targetMarginRight%px %targetMarginBottom%px %targetMarginLeft%px' }
+const titleOffsetStyle = { transform: 'translate(%titleOffsetX%px, %titleOffsetY%px)' }
+const goalOffsetStyle = { transform: 'translate(%goalOffsetX%px, %goalOffsetY%px)' }
+const progressOffsetStyle = { transform: 'translate(%progressOffsetX%px, %progressOffsetY%px)' }
+const targetOffsetStyle = { transform: 'translate(%targetOffsetX%px, %targetOffsetY%px)' }
 </script>
