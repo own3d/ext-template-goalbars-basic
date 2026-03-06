@@ -20,12 +20,14 @@
         loop
         autoplay
         playsinline
-        class="relative z-50 w-full h-auto"
+        class="relative w-full h-auto"
+        :class="mediaZClass"
         style="display: block;"
       />
       <img
         v-else-if="hasImage"
-        class="relative z-50 w-full h-auto"
+        class="relative w-full h-auto"
+        :class="mediaZClass"
         style="display: block;"
         :src="imageUrl"
         alt=""
@@ -33,7 +35,8 @@
 
       <!-- Background color layer -->
       <div
-        class="absolute z-10"
+        class="absolute"
+        :class="fillZClass"
         :style="fillAreaStyle"
       >
         <div
@@ -44,8 +47,8 @@
 
       <!-- Fill progress layer -->
       <div
-        class="absolute z-10 flex"
-        :class="barDirection === 'vertical' ? 'flex-col' : 'flex-row'"
+        class="absolute flex"
+        :class="[fillZClass, barDirection === 'vertical' ? 'flex-col' : 'flex-row']"
         :style="fillAreaStyle"
       >
         <div
@@ -277,7 +280,10 @@ function getTextStyle(settings: any) {
 const hasImage = %hasImage%
 const hasVideo = %hasVideo%
 const fillEffect = '%fillEffect%' as 'default' | 'bouncy' | 'fill'
+const fillLayer = '%fillLayer%' as 'behind' | 'front'
 const barDirection = '%barDirection%' as 'horizontal' | 'vertical'
+const fillZClass = fillLayer === 'front' ? 'z-[60]' : 'z-10'
+const mediaZClass = fillLayer === 'front' ? 'z-[5]' : 'z-50'
 const titleOffsetStyle = { transform: 'translate(%titleOffsetX%px, %titleOffsetY%px)' }
 const goalOffsetStyle = { transform: 'translate(%goalOffsetX%px, %goalOffsetY%px)' }
 const progressOffsetStyle = { transform: 'translate(%progressOffsetX%px, %progressOffsetY%px)' }
