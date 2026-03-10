@@ -128,7 +128,7 @@
     </div>
 
     <div
-      v-if="layout === 'standard' && values['goal-end-date']?.toggled && (values['dates-end-show'] || values['dates-end-time-show'])"
+      v-if="(layout === 'standard' || layout === 'stacked') && values['goal-end-date']?.toggled && (values['dates-end-show'] || values['dates-end-time-show'])"
       class="w-full"
       :style="{ ...datesStyle, paddingLeft: `${barInsetLeft}%`, paddingRight: `${barInsetRight}%` }"
     >
@@ -272,7 +272,7 @@ function getTextStyle(settings: any) {
     fontWeight: settings['font-weight'] ?? 'normal',
     lineHeight: settings['line-height'] ?? '1',
     textIndent: settings['text-indent'] ? `${settings['text-indent']}px` : '0',
-    letterSpacing: settings['letter-spacing'] ? `${settings['letter-spacing']}px` : '1',
+    letterSpacing: settings['letter-spacing'] ? `${settings['letter-spacing']}px` : 'normal',
   }
 }
 
