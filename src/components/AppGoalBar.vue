@@ -65,7 +65,7 @@
       <!-- Simple layout content -->
       <div
         v-if="layout === 'simple'"
-        class="absolute flex items-center justify-center gap-2 z-50"
+        class="absolute flex items-center justify-center gap-2 z-[70]"
         :style="textOverlayStyle"
       >
         <div :style="[titleStyle, titleOffsetStyle]">
@@ -80,7 +80,7 @@
       <!-- Standard layout content -->
       <div
         v-if="layout === 'standard'"
-        class="absolute z-50 flex items-center justify-between"
+        class="absolute z-[70] flex items-center justify-between"
         :style="[goalStyle, textOverlayStyle]"
       >
         <div :style="progressOffsetStyle">
@@ -95,7 +95,7 @@
       <!-- Condensed layout content -->
       <div
         v-if="layout === 'condensed'"
-        class="absolute flex items-center justify-between gap-2 z-50"
+        class="absolute flex items-center justify-between gap-2 z-[70]"
         :style="textOverlayStyle"
       >
         <div :style="[goalStyle, progressOffsetStyle]">
@@ -114,7 +114,7 @@
       <!-- Stacked layout content -->
       <div
         v-if="layout === 'stacked'"
-        class="absolute flex flex-col items-center justify-center z-50"
+        class="absolute flex flex-col items-center justify-center z-[70]"
         :style="textOverlayStyle"
       >
         <div :style="[titleStyle, titleOffsetStyle]">
