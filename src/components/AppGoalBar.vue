@@ -9,9 +9,7 @@
 
     <div
       class="relative overflow-hidden"
-      :class="{
-        '-my-2': layout === 'standard' && values.title,
-      }"
+      :class="[layout === 'standard' && values.title ? '-my-2' : '-mb-2']"
     >
       <video
         v-if="hasVideo && (values.animated || !hasImage)"
@@ -128,7 +126,7 @@
     </div>
 
     <div
-      v-if="(layout === 'standard' || layout === 'stacked') && values['goal-end-date']?.toggled && (values['dates-end-show'] || values['dates-end-time-show'])"
+      v-if="values['goal-end-date']?.toggled && (values['dates-end-show'] || values['dates-end-time-show'])"
       class="w-full"
       :style="{ ...datesStyle, paddingLeft: `${barInsetLeft}%`, paddingRight: `${barInsetRight}%` }"
     >
