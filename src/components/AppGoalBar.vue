@@ -100,7 +100,7 @@
           {{ currentGoalValue }}
         </div>
 
-        <div :style="[titleStyle, titleOffsetStyle]">
+        <div :style="[titleStyle, { flex: '1 1 auto', minWidth: '0' }, titleOffsetStyle]">
           {{ values.title }}:
         </div>
 
@@ -115,7 +115,7 @@
         class="absolute flex flex-col items-center justify-center z-[70]"
         :style="textOverlayStyle"
       >
-        <div :style="[titleStyle, titleOffsetStyle]">
+        <div :style="[titleStyle, { width: '100%' }, titleOffsetStyle]">
           {{ values.title }}
         </div>
 
